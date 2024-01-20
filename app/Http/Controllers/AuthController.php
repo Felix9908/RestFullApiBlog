@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Users; 
+use App\Models\Users;
 
 class AuthController extends Controller
 {
@@ -16,7 +16,7 @@ class AuthController extends Controller
             ->first();
 
         if ($user) {
-            return response()->json(['authenticated' => true]);
+            return response()->json(['authenticated' => true, 'id' => $user->id]);
         } else {
             return response()->json(['authenticated' => false]);
         }

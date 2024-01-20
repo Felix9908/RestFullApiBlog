@@ -17,12 +17,8 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->get('/users', 'UserController@getUsers');
-$router->post('/users', 'UserController@store');
-$router->get('/users/{id}', 'UserController@show');
-$router->put('/users/{id}', 'UserController@update');
-$router->delete('/users/{id}', 'UserController@destroy');
-
 $router->get('/getPost', 'UserWithPostController@getUsersWithPosts');
 $router->get('/getUserPostAll/{userId}', 'PostUserAllController@getUserAndPostData');
 $router->post('/login', 'AuthController@login');
+$router->post('/CreatePost', 'AddPostController@createPost');
+
