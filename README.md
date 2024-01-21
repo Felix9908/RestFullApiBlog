@@ -24,3 +24,43 @@ If you discover a security vulnerability within Lumen, please send an e-mail to 
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# Blog API - Lumen-PHP Server
+
+Este servidor proporciona una API RESTful para gestionar publicaciones de un blog, construido con Lumen-PHP y PostgreSQL.
+
+## Requisitos de Software
+
+- PHP
+- Composer
+- PostgreSQL
+
+## Configuración
+
+1. **Instalación de Dependencias**
+   ```bash
+   composer install
+
+   php -S localhost:8000 -t public
+
+# Endpoints   
+
+Listar todas las publicaciones
+- GET /getPost
+
+Listar todas las publicaciones de un usuario
+- Get /getUserPostAll
+
+Crear una publicacion
+- Post /CreatePost
+
+Eliminar una publicacion
+- Delete /deletePosts/{postId}
+
+Actializar una publicacion
+- Put /editPosts/{postId}
+
+Obtener una publicacion por el ID
+- Get /getSinglePost/{postId}
+
+
