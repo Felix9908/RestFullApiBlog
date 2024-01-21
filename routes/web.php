@@ -19,3 +19,6 @@ $router->post('/login', 'AuthController@login');
 $router->post('/CreatePost', 'PostController@createPost');
 $router->delete('/deletePosts/{postId}', 'PostController@deletePost');
 $router->put('/editPosts/{postId}', 'PostController@editPost');
+$router->get('/getSinglePost/{postId}', 'PostController@getSinglePost');
+
+

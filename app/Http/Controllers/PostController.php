@@ -87,4 +87,17 @@ class PostController extends Controller
             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function getSinglePost($postId)
+    {
+        try {
+            $post = PostModel::select('title', 'post')->find($postId);
+            if (!$post) {
+                return response()->json(['error' => 'Publicación no encontrada'], 404);
+            }
+            return response()->json(['post' => $post]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
 }
