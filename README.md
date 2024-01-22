@@ -45,22 +45,22 @@ Este servidor proporciona una API RESTful para gestionar publicaciones de un blo
 
 # Endpoints   
 
-Listar todas las publicaciones
+List all posts
 - GET /getPost
 
-Listar todas las publicaciones de un usuario
+List all post by a user
 - Get /getUserPostAll
 
-Crear una publicacion
+Create a post
 - Post /CreatePost
 
-Eliminar una publicacion
+Delete a post
 - Delete /deletePosts/{postId}
 
-Actializar una publicacion
+Update a post
 - Put /editPosts/{postId}
 
-Obtener una publicacion por el ID
+get a post by Id
 - Get /getSinglePost/{postId}
 
 
