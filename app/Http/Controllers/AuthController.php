@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Models\Users;
 
 class AuthController extends Controller
@@ -15,10 +16,13 @@ class AuthController extends Controller
             ->where('password', $credentials['password'])
             ->first();
 
-        if ($user) {
-            return response()->json(['authenticated' => true, 'id' => $user->id]);
-        } else {
+        if ($user == false) {
             return response()->json(['authenticated' => false]);
         }
+
+        $user->token = Str::random(150);
+        $user->save();
+
+        return response()->json(['authenticated' => true, 'id' => $user->id, 'token' => $user->token]);
     }
 }
