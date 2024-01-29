@@ -13,12 +13,10 @@
 |
 */
 
-$router->get('/getPost', 'PostController@getUsersWithPosts');
-$router->get('/getUserPostAll/{userId}', 'PostController@getUserAndPostData');
+$router->get('/getPost', 'GetAllPostController@getUsersWithPosts');
+$router->get('/getUserPostAll/{userId}', 'getUserPosts@getUserPosts');
 $router->post('/login', 'AuthController@login');
-$router->post('/CreatePost', 'PostController@createPost');
-$router->delete('/deletePosts/{postId}', 'PostController@deletePost');
-$router->put('/editPosts/{postId}', 'PostController@editPost');
-$router->get('/getSinglePost/{postId}', 'PostController@getSinglePost');
-
-
+$router->post('/CreatePost', 'CreatePostController@createPost');
+$router->delete('/deletePosts/{postId}', 'DeletePostController@deletePost');
+$router->put('/editPosts/{postId}', 'EditPostController@editPost');
+$router->get('/getSinglePost/{postId}', 'GetSinglePostController@getSinglePost');

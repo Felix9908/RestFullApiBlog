@@ -1,103 +1,112 @@
 <?php
 
-namespace App\Http\Controllers;
+// namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\PostModel;
-use App\Models\User;
-use Illuminate\Support\Facades\Validator;
+// use Illuminate\Http\Request;
+// use App\Models\PostModel;
+// use App\Models\User;
+// use App\Repositories\RepositoryPosts;
+// use Illuminate\Support\Facades\Validator;
 
-class PostController extends Controller
-{
-    public function createPost(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'post' => 'required|string',
-            'user_id' => 'required|integer',
-        ]);
+// class PostController extends Controller
+// {
 
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 400);
-        }
+//     protected $repositoryPosts;
 
-        try {
-            $post = new PostModel($request->all());
-            $post->save();
+//     public function __construct(RepositoryPosts $repositoryPosts)
+//     {
+//         $this->repositoryPosts = $repositoryPosts;
+//     }
 
-            return response()->json(['success' => true, 'message' => 'Post created successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
-        }
-    }
+//     public function createPost(Request $request)
+//     {
+//         $validator = Validator::make($request->all(), [
+//             'title' => 'required|string',
+//             'post' => 'required|string',
+//             'user_id' => 'required|integer',
+//         ]);
 
-    public function getUsersWithPosts()
-    {
-        $usersWithPosts = User::join('post', 'users.id', '=', 'post.user_id')
-            ->select('users.*', 'post.*')
-            ->get();
+//         if ($validator->fails()) {
+//             return response()->json(['success' => false, 'errors' => $validator->errors()], 400);
+//         }
 
-        return response()->json($usersWithPosts);
-    }
+//         try {
+//             $postData = $request->all();
+//             $post = $this->repositoryPosts->createPost($postData);
 
-    public function getUserAndPostData($userId)
-    {
-        $userData = User::select('name')->where('id', $userId)->first();
-        $postData = PostModel::where('user_id', $userId)->get();
+//             return response()->json(['success' => true, 'message' => 'Post created successfully']);
+//         } catch (\Exception $e) {
+//             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+//         }
+//     }
 
-        return response()->json(['user' => $userData, 'posts' => $postData]);
-    }
+//     public function getUsersWithPosts()
+//     {
+//         $usersWithPosts = User::join('post', 'users.id', '=', 'post.user_id')
+//             ->select('users.*', 'post.*')
+//             ->get();
 
-    public function deletePost(Request $request, $postId)
-    {
-        try {
-            PostModel::destroy($postId);
+//         return response()->json($usersWithPosts);
+//     }
 
-            return response()->json(['success' => true, 'message' => 'Post deleted successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
-        }
-    }
+//     public function getUserPosts($userId)
+//     {
+//         $userData = User::select('name')->where('id', $userId)->first();
+//         $postData = PostModel::where('user_id', $userId)->get();
 
-    public function editPost(Request $request, $postId)
-    {
-        $post = PostModel::find($postId);
+//         return response()->json(['user' => $userData, 'posts' => $postData]);
+//     }
 
-        if (!$post) {
-            return response()->json(['error' => 'Post not found'], 404);
-        }
+//     public function deletePost(Request $request, $postId)
+//     {
+//         try {
+//             PostModel::destroy($postId);
 
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string',
-            'post' => 'required|string',
-        ]);
+//             return response()->json(['success' => true, 'message' => 'Post deleted successfully']);
+//         } catch (\Exception $e) {
+//             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+//         }
+//     }
 
-        if ($validator->fails()) {
-            return response()->json(['success' => false, 'errors' => $validator->errors()], 400);
-        }
+//     public function editPost(Request $request, $postId)
+//     {
+//         $post = PostModel::find($postId);
 
-        try {
-            $post->update([
-                'title' => $request->input('title'),
-                'post' => $request->input('post'),
-            ]);
+//         if (!$post) {
+//             return response()->json(['error' => 'Post not found'], 404);
+//         }
 
-            return response()->json(['success' => true, 'message' => 'Post updated successfully']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
-        }
-    }
+//         $validator = Validator::make($request->all(), [
+//             'title' => 'required|string',
+//             'post' => 'required|string',
+//         ]);
 
-    public function getSinglePost($postId)
-    {
-        try {
-            $post = PostModel::select('title', 'post')->find($postId);
-            if (!$post) {
-                return response()->json(['error' => 'Publicación no encontrada'], 404);
-            }
-            return response()->json(['post' => $post]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    }
-}
+//         if ($validator->fails()) {
+//             return response()->json(['success' => false, 'errors' => $validator->errors()], 400);
+//         }
+
+//         try {
+//             $post->update([
+//                 'title' => $request->input('title'),
+//                 'post' => $request->input('post'),
+//             ]);
+
+//             return response()->json(['success' => true, 'message' => 'Post updated successfully']);
+//         } catch (\Exception $e) {
+//             return response()->json(['success' => false, 'error' => $e->getMessage()], 500);
+//         }
+//     }
+
+//     public function getSinglePost($postId)
+//     {
+//         try {
+//             $post = PostModel::select('title', 'post')->find($postId);
+//             if (!$post) {
+//                 return response()->json(['error' => 'Publicación no encontrada'], 404);
+//             }
+//             return response()->json(['post' => $post]);
+//         } catch (\Exception $e) {
+//             return response()->json(['error' => $e->getMessage()], 500);
+//         }
+//     }
+// }
